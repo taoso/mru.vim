@@ -21,7 +21,7 @@ function! mru#Open()
 	execute 'edit '.expand(p, ':')
 endfunction
 
-function! s:List()
+function s:List()
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
 	let row = n > 10 ? 10 : n
@@ -35,7 +35,7 @@ function! s:List()
 	endwhile
 endfunction
 
-function! s:Add()
+function s:Add()
 	let cpath = expand('%:p')
 	if !filereadable(cpath)
 		return
@@ -52,16 +52,23 @@ function! s:Add()
 	call insert(g:MRU_FILE_LIST, cpath)
 endfunction
 
-function! s:ClearCurrentFile()
+function s:ClearCurrentFile()
 	let cpath = expand('%:p')
 	call s:Remove(cpath)
 endfunction
 
-function! s:Remove(cpath)
-	let idx = index(g:MRU_FILE_LIST, a:cpath)
+function! mru#RemoveCurrentFile()
+	let path = expand(getline('.'), '%:p')
+	call s:Remove(path)
+
+	delete
+endfunction
+
+function s:Remove(path)
+	let idx = index(g:MRU_FILE_LIST, a:path)
 
 	if idx == -1
-		let idx = index(g:MRU_FILE_LIST, getcwd().'/'.a:cpath)
+		let idx = index(g:MRU_FILE_LIST, getcwd().'/'.a:path)
 	end
 
 	if idx >= 0
@@ -91,6 +98,7 @@ augroup Mru
 	autocmd FileType MRU nnoremap <silent> <buffer> <cr> :call mru#Open()<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <Esc> :bdelete<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <C-c> :bdelete<cr>
+	autocmd FileType MRU nnoremap <silent> <buffer> dd :call mru#RemoveCurrentFile()<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <C-n> j
 	autocmd FileType MRU nnoremap <silent> <buffer> <C-p> k
 augroup END
@@ -99,4 +107,3 @@ command! Mru call s:List()
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
