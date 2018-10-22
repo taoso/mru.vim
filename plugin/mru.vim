@@ -94,6 +94,7 @@ endif
 augroup Mru
 	autocmd BufEnter * call s:ClearCurrentFile()
 	autocmd BufWinLeave,BufWritePost * call s:Add()
+	autocmd BufLeave * if &ft ==# 'MRU' | bdelete | endif
 
 	autocmd FileType MRU nnoremap <silent> <buffer> <cr> :call mru#Open()<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <Esc> :bdelete<cr>
