@@ -1,4 +1,4 @@
-# fzf-mru
+# mru
 
 Most Recently Used File List for Vim/NeoVim.
 
