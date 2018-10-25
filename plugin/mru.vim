@@ -25,7 +25,7 @@ function s:List()
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
 	let row = n > 10 ? 10 : n
-	execute 'keepalt below '.row.' new'
+	execute 'keepalt bo '.row.' new'
 	setlocal buftype=nofile
 	setlocal filetype=MRU
 	let i = 0
