@@ -101,13 +101,15 @@ augroup Mru
 	autocmd BufLeave * if &ft ==# 'MRU' | bdelete | endif
 
 	autocmd FileType MRU nnoremap <silent> <buffer> <cr> :call mru#Open()<cr>
-	autocmd FileType MRU nnoremap <silent> <buffer> <Esc> :bdelete<cr>
-	autocmd FileType MRU nnoremap <silent> <buffer> <C-c> :bdelete<cr>
+	autocmd FileType MRU nnoremap <silent> <buffer> <esc> :bdelete<cr>
+	autocmd FileType MRU nnoremap <silent> <buffer> <c-c> :bdelete<cr>
+	autocmd FileType MRU cnoremap <silent> <buffer> <c-c> <esc>:bdelete<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> dd :call mru#RemoveCurrentFile()<cr>
-	autocmd FileType MRU nnoremap <silent> <buffer> <C-n> j
-	autocmd FileType MRU nnoremap <silent> <buffer> <C-p> k
+	autocmd FileType MRU nnoremap <silent> <buffer> <c-n> j
+	autocmd FileType MRU nnoremap <silent> <buffer> <c-p> k
 	autocmd FileType MRU cnoremap <silent> <buffer> <cr> <esc>:call mru#Open()<cr>
 	autocmd FileType MRU call feedkeys('/')
+	autocmd FileType MRU setlocal cursorline
 augroup END
 
 command! Mru call s:List()
