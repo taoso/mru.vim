@@ -106,6 +106,8 @@ augroup Mru
 	autocmd FileType MRU nnoremap <silent> <buffer> dd :call mru#RemoveCurrentFile()<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <C-n> j
 	autocmd FileType MRU nnoremap <silent> <buffer> <C-p> k
+	autocmd FileType MRU cnoremap <silent> <buffer> <cr> <esc>:call mru#Open()<cr>
+	autocmd FileType MRU call feedkeys('/')
 augroup END
 
 command! Mru call s:List()
