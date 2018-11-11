@@ -22,6 +22,7 @@ function! mru#Open()
 endfunction
 
 function s:List()
+	setlocal modifiable
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
 	let row = n > 10 ? 10 : n
@@ -33,6 +34,7 @@ function s:List()
 		call setline(i+1, files[i])
 		let i += 1
 	endwhile
+	setlocal nomodifiable
 endfunction
 
 function s:Add()
@@ -58,10 +60,12 @@ function s:ClearCurrentFile()
 endfunction
 
 function! mru#RemoveCurrentFile()
+	setlocal modifiable
 	let path = expand(getline('.'), '%:p')
 	call s:Remove(path)
 
 	delete
+	setlocal nomodifiable
 endfunction
 
 function s:Remove(path)
