@@ -107,8 +107,6 @@ augroup Mru
 	autocmd FileType MRU nnoremap <silent> <buffer> dd :call mru#RemoveCurrentFile()<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <c-n> j
 	autocmd FileType MRU nnoremap <silent> <buffer> <c-p> k
-	autocmd FileType MRU cnoremap <silent> <buffer> <cr> <esc>:call mru#Open()<cr>
-	autocmd FileType MRU call feedkeys('/')
 	autocmd FileType MRU setlocal cursorline
 augroup END
 
