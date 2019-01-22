@@ -21,7 +21,7 @@ function! mru#Open()
 	execute 'edit '.expand(p, ':')
 endfunction
 
-function s:List()
+function! s:List()
 	setlocal modifiable
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
@@ -37,7 +37,7 @@ function s:List()
 	setlocal nomodifiable
 endfunction
 
-function s:Add()
+function! s:Add()
 	let cpath = expand('%:p')
 	if !filereadable(cpath)
 		return
@@ -54,7 +54,7 @@ function s:Add()
 	call insert(g:MRU_FILE_LIST, cpath)
 endfunction
 
-function s:ClearCurrentFile()
+function! s:ClearCurrentFile()
 	let cpath = expand('%:p')
 	call s:Remove(cpath)
 endfunction
@@ -68,7 +68,7 @@ function! mru#RemoveCurrentFile()
 	setlocal nomodifiable
 endfunction
 
-function s:Remove(path)
+function! s:Remove(path)
 	let idx = index(g:MRU_FILE_LIST, a:path)
 
 	if idx == -1
