@@ -29,6 +29,7 @@ function! s:List()
 	execute 'keepalt bo '.row.' new'
 	setlocal buftype=nofile
 	setlocal filetype=MRU
+	setlocal colorcolumn=
 	let i = 0
 	while i < n
 		call setline(i+1, files[i])
