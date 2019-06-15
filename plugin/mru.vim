@@ -2,7 +2,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 if !exists('g:mru_file_list_size')
-	let g:mru_file_list_size = 10
+	let g:mru_file_list_size = 7
 end
 
 if !exists('g:mru_ignore_patterns')
@@ -25,7 +25,7 @@ function! s:List()
 	setlocal modifiable
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
-	let row = n > 10 ? 10 : n
+	let row = n > 7 ? 7 : n
 	execute 'keepalt bo '.row.' new'
 	setlocal buftype=nofile
 	setlocal filetype=MRU
