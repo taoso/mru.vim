@@ -109,6 +109,7 @@ augroup Mru
 	autocmd FileType MRU nnoremap <silent> <buffer> <c-n> j
 	autocmd FileType MRU nnoremap <silent> <buffer> <c-p> k
 	autocmd FileType MRU setlocal cursorline
+	autocmd FileType MRU setlocal number
 augroup END
 
 command! Mru call s:List()
