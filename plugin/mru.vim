@@ -18,6 +18,9 @@ function! mru#Open()
 		return
 	endif
 
+	while &buftype != ""
+		execute 'wincmd w'
+	endwhile
 	execute 'edit '.expand(p, ':')
 endfunction
 
