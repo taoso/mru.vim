@@ -29,7 +29,24 @@ function! s:List()
 	let files = map(copy(g:MRU_FILE_LIST), 'fnamemodify(v:val, ":~:.")')
 	let n = len(files)
 	let row = n > 7 ? 7 : n
-	execute 'keepalt bo '.row.' new'
+	if has('nvim')
+		let buf = nvim_create_buf(v:false, v:true)
+
+		let ui = nvim_list_uis()[0]
+		let w = float2nr(floor(ui.width*0.8))
+		let opts = {'relative': 'editor',
+                          \ 'border': "rounded",
+                          \ 'width': w,
+                          \ 'height': row,
+                          \ 'col': (ui.width - w) / 2,
+                          \ 'row': ui.height / 3 - row / 2,
+                          \ 'style': 'minimal',
+                          \ }
+		call nvim_open_win(buf, 1, opts)
+	else
+		execute 'keepalt bo '.row.' new'
+	endif
+	setlocal nowrap
 	setlocal buftype=nofile
 	setlocal filetype=MRU
 	setlocal colorcolumn=
@@ -105,6 +122,7 @@ augroup Mru
 	autocmd BufLeave * if &ft ==# 'MRU' | bdelete | endif
 
 	autocmd FileType MRU nnoremap <silent> <buffer> <cr> :call mru#Open()<cr>
+	autocmd FileType MRU nnoremap <silent> <buffer> q :bdelete<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <esc> :bdelete<cr>
 	autocmd FileType MRU nnoremap <silent> <buffer> <c-c> :bdelete<cr>
 	autocmd FileType MRU cnoremap <silent> <buffer> <c-c> <esc>:bdelete<cr>
